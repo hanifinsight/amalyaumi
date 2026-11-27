@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { DashboardPage, LoginPage } from "./AuthPages";
 
 const features = [
   { number: "01", title: "Amal Yaumi", text: "Catat ibadah dan kebiasaan baik. Lihat perkembangan diri dari hari ke hari.", icon: "✦" },
@@ -9,7 +11,7 @@ const features = [
   { number: "06", title: "Pengembangan Diri", text: "Bangun kebiasaan sehat, belajar, dan berinovasi.", icon: "↗" },
 ];
 
-export default function App() {
+function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <main>
@@ -71,5 +73,18 @@ export default function App() {
 
       <footer><div className="container footer-inner"><a className="brand footer-brand" href="#"><span className="brand-mark">A</span><span>AKSANI<span className="brand-dot">.</span></span></a><span>© {new Date().getFullYear()} AKSANI. Bertumbuh dalam kebaikan.</span><a href="#top">Kembali ke atas ↑</a></div></footer>
     </main>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
