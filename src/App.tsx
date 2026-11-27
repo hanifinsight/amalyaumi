@@ -23,7 +23,7 @@ function LandingPage() {
             <a href="#tentang" onClick={() => setMenuOpen(false)}>Tentang</a>
             <a href="#fitur" onClick={() => setMenuOpen(false)}>Fitur</a>
             <a href="#nilai" onClick={() => setMenuOpen(false)}>Nilai Kami</a>
-            <a className="nav-cta" href="mailto:halo@aksani.id?subject=Informasi%20AKSANI">Hubungi Kami <span>↗</span></a>
+            <a className="nav-cta" href="/login">Masuk <span>↗</span></a>
           </div>
         </nav>
       </header>
