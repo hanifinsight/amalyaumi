@@ -21,11 +21,28 @@ await app.register(cors, {
   maxAge: 86_400,
 });
 
-app.get("/health", async () => ({
-  ok: true,
-  service: "aksani-api",
-  timestamp: new Date().toISOString(),
-}));
+app.get("/health", async (request, reply) => {
+  try {
+    const result = await pool.query(
+      "select count(*)::int as categories from aksani.activity_categories",
+    );
+    return {
+      ok: true,
+      service: "aksani-api",
+      database: "connected",
+      seededCategories: result.rows[0]?.categories ?? 0,
+      timestamp: new Date().toISOString(),
+    };
+  } catch (error) {
+    request.log.error({ error }, "Database readiness check failed");
+    return reply.code(503).send({
+      ok: false,
+      service: "aksani-api",
+      database: "unavailable",
+      timestamp: new Date().toISOString(),
+    });
+  }
+});
 
 app.route({
   method: ["GET", "POST"],
