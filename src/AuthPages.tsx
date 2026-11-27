@@ -2,6 +2,8 @@ import { useEffect, useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_BASE_URL, authClient } from "./lib/auth-client";
 
+const googleAuthEnabled = import.meta.env.VITE_ENABLE_GOOGLE_AUTH === "true";
+
 export function LoginPage() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<"login" | "register">("login");
@@ -57,8 +59,8 @@ export function LoginPage() {
           {error && <p className="auth-error" role="alert">{error}</p>}
           <button className="button button-dark auth-submit" disabled={busy}>{busy ? "Memproses..." : mode === "login" ? "Masuk ke AKSANI" : "Buat akun"} <span>↗</span></button>
         </form>
-        <div className="auth-divider"><span>atau</span></div>
-        <button className="google-button" onClick={signInGoogle} disabled={busy}><span className="google-g">G</span> Lanjutkan dengan Google</button>
+        {googleAuthEnabled && <><div className="auth-divider"><span>atau</span></div>
+        <button className="google-button" onClick={signInGoogle} disabled={busy}><span className="google-g">G</span> Lanjutkan dengan Google</button></>}
         <p className="auth-switch">{mode === "login" ? "Belum memiliki akun?" : "Sudah memiliki akun?"} <button onClick={() => { setMode(mode === "login" ? "register" : "login"); setError(""); }}>{mode === "login" ? "Daftar sekarang" : "Masuk"}</button></p>
         <p className="auth-legal">Dengan melanjutkan, kamu menyetujui ketentuan penggunaan dan kebijakan privasi AKSANI.</p>
       </section>
