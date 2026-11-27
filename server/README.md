@@ -21,7 +21,7 @@ Copy `.env.example` to `.env` and fill in:
 
 Google OAuth is enabled automatically when both Google credentials are configured. Register this callback URL in Google Cloud:
 
-`https://aksani-api.vercel.app/api/auth/callback/google`
+`https://aksani.vercel.app/api/auth/callback/google`
 
 ## Local development
 
