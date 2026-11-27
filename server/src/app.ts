@@ -89,7 +89,7 @@ app.get("/api/activity-categories", async (request, reply) => {
 });
 
 const dailyEntrySchema = z.object({
-  entryDate: z.string().date().optional(),
+  entryDate: z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/).optional(),
   categoryId: z.string().uuid().nullable().optional(),
   activityName: z.string().trim().min(1).max(160),
   quantity: z.number().min(0).max(1_000_000).default(1),
