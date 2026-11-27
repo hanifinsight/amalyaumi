@@ -1,4 +1,4 @@
-import Fastify from "fastify";
+import Fastify, { type FastifyReply, type FastifyRequest } from "fastify";
 import cors from "@fastify/cors";
 import { fromNodeHeaders } from "better-auth/node";
 import { z } from "zod";
@@ -55,7 +55,7 @@ app.route({
   },
 });
 
-async function requireSession(request: Parameters<typeof app.get>[1] extends never ? never : any, reply: any) {
+async function requireSession(request: FastifyRequest, reply: FastifyReply) {
   const session = await auth.api.getSession({
     headers: fromNodeHeaders(request.headers),
   });
