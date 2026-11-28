@@ -1,3 +1,22 @@
-// Vercel's zero-configuration Fastify adapter discovers src/server.ts.
-// Keep the application setup and route definitions in app.ts.
-import "./app.js";
+import Fastify from "fastify";
+
+// Isolated diagnostic server: deliberately no database, auth, or app imports.
+const app = Fastify({ logger: true });
+
+app.get("/", async () => ({
+  ok: true,
+  service: "aksani-api-diagnostic",
+}));
+
+app.get("/health", async () => ({
+  ok: true,
+  service: "aksani-api-diagnostic",
+  database: "not-connected",
+  auth: "disabled",
+  timestamp: new Date().toISOString(),
+}));
+
+await app.listen({
+  port: Number(process.env.PORT ?? 3000),
+  host: "0.0.0.0",
+});
